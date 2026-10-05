@@ -1,4 +1,3 @@
-import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
 import ServicesMarquee from '@/components/ServicesMarquee'
 import StatsSection from '@/components/StatsSection'
@@ -14,7 +13,6 @@ import ContactSection from '@/components/ContactSection'
 export default function HomePage() {
   return (
     <>
-      <Navbar />
       <Hero />
       <ServicesMarquee />
       <StatsSection />
