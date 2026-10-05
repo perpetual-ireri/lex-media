@@ -107,7 +107,7 @@ const process = [
   { step: '01', title: 'Browse & Add to Cart', desc: 'Select equipment from the catalogue. Add as many items as your project needs — your cart builds up in real time.' },
   { step: '02', title: 'Confirm & Book', desc: 'Log in, complete your booking, and an invoice is generated automatically and sent to your email.' },
   { step: '03', title: 'Collect or Deliver', desc: 'Pay in full or a 50% deposit to confirm. Collect from our Nairobi office or arrange delivery.' },
-  { step: '04', title: 'Return & Done', desc: 'Return equipment at the agreed time. We do a quick check-in together and that\'s it — simple, professional, no fuss.' },
+  { step: '04', title: 'Return & Done', desc: "Return equipment at the agreed time. We do a quick check-in together and that's it — simple, professional, no fuss." },
 ]
 
 export default function Hire() {
@@ -115,9 +115,10 @@ export default function Hire() {
   const [cart, setCart] = useState<string[]>([])
   const [cartOpen, setCartOpen] = useState(false)
 
-  const filtered = activeCategory === 'All Equipment'
-    ? equipment
-    : equipment.filter((e) => e.category === activeCategory)
+  const filtered =
+    activeCategory === 'All Equipment'
+      ? equipment
+      : equipment.filter((e) => e.category === activeCategory)
 
   const toggleCart = (id: string) => {
     setCart((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]))
@@ -127,7 +128,7 @@ export default function Hire() {
   const cartTotal = cartItems.reduce((sum, item) => sum + item.price, 0)
 
   return (
-    <div className="bg-black min-h-screen text-white">
+    <div id="hire" className="bg-black min-h-screen text-white">
       {/* Hero */}
       <section className="relative pt-32 pb-20 px-6 overflow-hidden">
         <div className="absolute inset-0 opacity-15">
@@ -142,7 +143,8 @@ export default function Hire() {
             Equipment &amp; Crew Rental
           </p>
           <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-            Broadcast-Grade Kit,<br />
+            Broadcast-Grade Kit,
+            <br />
             <span className="text-amber-400">Ready to Deploy</span>
           </h1>
           <p className="text-white/70 text-lg max-w-3xl leading-relaxed mb-8">
@@ -199,7 +201,9 @@ export default function Hire() {
               className="p-8 rounded-2xl bg-neutral-950 border border-white/10 flex flex-col"
             >
               <div className="text-4xl mb-4">{k.icon}</div>
-              <div className="text-amber-400 text-sm font-mono mb-2">{String(i + 1).padStart(2, '0')}</div>
+              <div className="text-amber-400 text-sm font-mono mb-2">
+                {String(i + 1).padStart(2, '0')}
+              </div>
               <h3 className="text-xl font-bold mb-3">{k.name}</h3>
               <p className="text-white/60 text-sm leading-relaxed mb-6 flex-1">{k.desc}</p>
               <button className="text-amber-400 font-semibold hover:text-amber-300 transition text-sm self-start">
@@ -214,8 +218,8 @@ export default function Hire() {
       <section id="catalogue" className="py-20 px-6 max-w-7xl mx-auto">
         <h2 className="text-3xl md:text-4xl font-bold mb-4">Equipment Catalogue</h2>
         <p className="text-white/60 mb-8 max-w-3xl">
-          Rates are daily unless stated. A 10% discount is applied at checkout.
-          For extended hires, contact us for a custom package quote.
+          Rates are daily unless stated. A 10% discount is applied at checkout. For
+          extended hires, contact us for a custom package quote.
         </p>
 
         {/* Category filter */}
@@ -320,7 +324,7 @@ export default function Hire() {
       <section className="py-20 px-6 max-w-4xl mx-auto text-center border-t border-white/5">
         <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Book?</h2>
         <p className="text-white/70 mb-8 leading-relaxed">
-          You've built your cart. Create a free account or log in to set your hire
+          You&apos;ve built your cart. Create a free account or log in to set your hire
           dates, get an instant invoice, and confirm your booking.
         </p>
         <div className="flex flex-wrap gap-4 justify-center">
@@ -333,14 +337,16 @@ export default function Hire() {
         </div>
       </section>
 
-      {/* Floating cart */}
+      {/* Floating cart button */}
       {cart.length > 0 && (
         <button
           onClick={() => setCartOpen(true)}
           className="fixed bottom-6 right-6 z-40 flex items-center gap-3 px-6 py-4 bg-amber-400 text-black font-bold rounded-full shadow-2xl hover:bg-amber-300 transition"
         >
           <ShoppingCart size={20} />
-          <span>{cart.length} item{cart.length > 1 ? 's' : ''}</span>
+          <span>
+            {cart.length} item{cart.length > 1 ? 's' : ''}
+          </span>
           <span className="pl-3 border-l border-black/20">
             KES {cartTotal.toLocaleString()}
           </span>
@@ -357,41 +363,52 @@ export default function Hire() {
           <div className="relative w-full max-w-md bg-neutral-950 border-l border-white/10 p-6 overflow-y-auto">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-xl font-bold">Your Cart</h3>
-              <button onClick={() => setCartOpen(false)} className="text-white/60 hover:text-white">
+              <button
+                onClick={() => setCartOpen(false)}
+                className="text-white/60 hover:text-white"
+                aria-label="Close cart"
+              >
                 <X size={22} />
               </button>
             </div>
-            <div className="space-y-4 mb-6">
-              {cartItems.map((item) => (
-                <div
-                  key={item.id}
-                  className="flex items-start justify-between gap-4 p-4 rounded-lg bg-black border border-white/10"
-                >
-                  <div className="flex-1">
-                    <div className="font-semibold text-sm">{item.name}</div>
-                    <div className="text-amber-400 text-sm mt-1">
-                      KES {item.price.toLocaleString()} / day
+
+            {cartItems.length === 0 ? (
+              <p className="text-white/50 text-sm">Your cart is empty.</p>
+            ) : (
+              <>
+                <div className="space-y-4 mb-6">
+                  {cartItems.map((item) => (
+                    <div
+                      key={item.id}
+                      className="flex items-start justify-between gap-4 p-4 rounded-lg bg-black border border-white/10"
+                    >
+                      <div className="flex-1">
+                        <div className="font-semibold text-sm">{item.name}</div>
+                        <div className="text-amber-400 text-sm mt-1">
+                          KES {item.price.toLocaleString()} / day
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => toggleCart(item.id)}
+                        className="text-white/40 hover:text-red-400 transition"
+                        aria-label="Remove item"
+                      >
+                        <X size={16} />
+                      </button>
                     </div>
-                  </div>
-                  <button
-                    onClick={() => toggleCart(item.id)}
-                    className="text-white/40 hover:text-red-400 transition"
-                    aria-label="Remove item"
-                  >
-                    <X size={16} />
-                  </button>
+                  ))}
                 </div>
-              ))}
-            </div>
-            <div className="pt-4 border-t border-white/10 flex items-center justify-between mb-6">
-              <span className="text-white/60">Total per day</span>
-              <span className="text-xl font-bold text-amber-400">
-                KES {cartTotal.toLocaleString()}
-              </span>
-            </div>
-            <button className="w-full py-4 bg-amber-400 text-black font-semibold rounded-full hover:bg-amber-300 transition">
-              Log In to Checkout
-            </button>
+                <div className="pt-4 border-t border-white/10 flex items-center justify-between mb-6">
+                  <span className="text-white/60">Total per day</span>
+                  <span className="text-xl font-bold text-amber-400">
+                    KES {cartTotal.toLocaleString()}
+                  </span>
+                </div>
+                <button className="w-full py-4 bg-amber-400 text-black font-semibold rounded-full hover:bg-amber-300 transition">
+                  Log In to Checkout
+                </button>
+              </>
+            )}
           </div>
         </div>
       )}
