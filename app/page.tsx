@@ -1,3 +1,4 @@
+import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
 import ServicesMarquee from '@/components/ServicesMarquee'
 import StatsSection from '@/components/StatsSection'
@@ -7,11 +8,13 @@ import IndustriesSection from '@/components/IndustriesSection'
 import ProcessTimeline from '@/components/ProcessTimeline'
 import ClientsLogos from '@/components/ClientsLogos'
 import GoogleReviews from '@/components/GoogleReviews'
+import Hire from '@/components/Hire'
 import ContactSection from '@/components/ContactSection'
 
 export default function HomePage() {
   return (
     <>
+      <Navbar />
       <Hero />
       <ServicesMarquee />
       <StatsSection />
@@ -21,6 +24,7 @@ export default function HomePage() {
       <ProcessTimeline />
       <ClientsLogos />
       <GoogleReviews />
+      <Hire />
       <ContactSection />
     </>
   )
